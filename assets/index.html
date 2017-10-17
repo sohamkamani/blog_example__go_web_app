@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>The bird encyclopedia</title>
+</head>
+
+<body>
+  <h1>The bird encyclopedia</h1>
+  <!-- 
+    This section of the document specifies the table that will
+    be used to display the list of birds and their description
+   -->
+  <table>
+    <tr>
+      <th>Species</th>
+      <th>Description</th>
+    </tr>
+    <td>Pigeon</td>
+    <td>Common in cities</td>
+    </tr>
+  </table>
+  <br/>
+
+  <!-- 
+    This section contains the form, that will be used to hit the 
+    `POST /bird` API that we will build in the next section
+   -->
+  <form action="/bird" method="post">
+    Species:
+    <input type="text" name="species">
+    <br/> Description:
+    <input type="text" name="description">
+    <br/>
+    <input type="submit" value="Submit">
+  </form>
+
+  <!-- 
+    Finally, the last section is the script that will
+    run on each page load to fetch the list of birds
+    and add them to our existing table
+   -->
+  <script>
+    birdTable = document.querySelector("table")
+
+    /*
+    Use the browsers `fetch` API to make a GET call to /bird
+    We expect the response to be a JSON list of birds, of the
+    form :
+    [
+      {"species":"...","description":"..."},
+      {"species":"...","description":"..."}
+    ]
+    */
+    fetch("/bird")
+      .then(response => response.json())
+      .then(birdList => {
+        //Once we fetch the list, we iterate over it
+        birdList.forEach(bird => {
+          // Create the table row
+          row = document.createElement("tr")
+
+          // Create the table data elements for the species and description columns
+          species = document.createElement("td")
+          species.innerHTML = bird.species
+          description = document.createElement("td")
+          description.innerHTML = bird.description
+
+          // Add the data elements to the row
+          row.appendChild(species)
+          row.appendChild(description)
+          // Finally, add the row element to the table itself
+          birdTable.appendChild(row)
+        })
+      })
+  </script>
+</body>
+
+</html>
