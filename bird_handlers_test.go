@@ -68,7 +68,7 @@ func TestCreateBirdsHandler(t *testing.T) {
 
 	if status := recorder.Code; status != http.StatusFound {
 		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+			status, http.StatusFound)
 	}
 
 	expected := Bird{"eagle", "A bird of prey"}
