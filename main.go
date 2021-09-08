@@ -15,7 +15,7 @@ func newRouter() *mux.Router {
 	r.HandleFunc("/hello", handler).Methods("GET")
 
 	// Declare the static file directory and point it to the directory we just made
-	staticFileDirectory := http.Dir("./assets/")
+	staticFileDirectory := http.Dir("./assets")
 	// Declare the handler, that routes requests to their respective filename.
 	// The fileserver is wrapped in the `stripPrefix` method, because we want to
 	// remove the "/assets/" prefix when looking for files.
